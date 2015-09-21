@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="paperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nodeID1" Type="int" />
+          <Property Name="nodeID2" Type="int" />
+          <Property Name="weight" Type="int" />
+          <Property Name="distance" Type="int" />
+          <Property Name="frequency" Type="int" />
+          <Property Name="paperID" Type="int" />
+        </EntityType>
+        <EntityType Name="node">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="255" />
+          <Property Name="frequency" Type="int" />
+          <Property Name="paperId" Type="int" />
+          <Property Name="weight" Type="int" />
+        </EntityType>
+        <EntityType Name="paper">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Authors" Type="nvarchar" MaxLength="255" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" />
+          <Property Name="Year" Type="int" />
+          <Property Name="SourceTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="Volume" Type="nvarchar" MaxLength="255" />
+          <Property Name="Issue" Type="nvarchar" MaxLength="255" />
+          <Property Name="ArtNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="PageStart" Type="int" />
+          <Property Name="PageEnd" Type="int" />
+          <Property Name="PageCount" Type="nvarchar" MaxLength="255" />
+          <Property Name="CitedBy" Type="int" />
+          <Property Name="Link" Type="nvarchar" MaxLength="255" />
+          <Property Name="Affiliations" Type="nvarchar" MaxLength="255" />
+          <Property Name="AuthorsWithAffiliations" Type="nvarchar(max)" />
+          <Property Name="Abstract" Type="nvarchar(max)" />
+          <Property Name="AuthorKeywords" Type="nvarchar" MaxLength="255" />
+          <Property Name="IndexKeywords" Type="nvarchar" MaxLength="255" />
+          <Property Name="MolecularSequenceNumbers" Type="nvarchar" MaxLength="255" />
+          <Property Name="ChemicalsCAS" Type="nvarchar" MaxLength="255" />
+          <Property Name="Tradenames" Type="nvarchar" MaxLength="255" />
+          <Property Name="Manufacturers" Type="nvarchar" MaxLength="255" />
+          <Property Name="FundingDetails" Type="nvarchar" MaxLength="255" />
+          <Property Name="Refs" Type="nvarchar(max)" />
+          <Property Name="CorrespondenceAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="Editors" Type="nvarchar" MaxLength="255" />
+          <Property Name="Sponsors" Type="nvarchar" MaxLength="255" />
+          <Property Name="Publisher" Type="nvarchar" MaxLength="255" />
+          <Property Name="ConferenceName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ConferenceDate" Type="nvarchar" MaxLength="255" />
+          <Property Name="ConferenceLocation" Type="nvarchar" MaxLength="255" />
+          <Property Name="ConferenceCode" Type="int" />
+          <Property Name="ISSN" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISBN" Type="nvarchar" MaxLength="255" />
+          <Property Name="CODEN" Type="nvarchar" MaxLength="255" />
+          <Property Name="DOI" Type="nvarchar" MaxLength="255" />
+          <Property Name="PubMedID" Type="nvarchar" MaxLength="255" />
+          <Property Name="LanguageofOriginalDocument" Type="nvarchar" MaxLength="255" />
+          <Property Name="AbbreviatedSourceTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="DocumentType" Type="nvarchar" MaxLength="255" />
+          <Property Name="Source" Type="nvarchar" MaxLength="255" />
+          <Property Name="AuthorId" Type="int" />
+          <Property Name="StemmedTitle" Type="nvarchar(max)" />
+          <Property Name="StemmedAbstract" Type="nvarchar(max)" />
+          <Property Name="AbstractWithoutQuotes" Type="nvarchar(max)" />
+          <Property Name="TitleWithoutQuotes" Type="nvarchar(max)" />
+          <Property Name="coPublicationsId" Type="int" />
+          <Property Name="eid" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="preLink">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nodeID1" Type="int" />
+          <Property Name="nodeID2" Type="int" />
+          <Property Name="distance" Type="int" />
+          <Property Name="paperID" Type="int" />
+        </EntityType>
+        <EntityType Name="preNode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="255" />
+          <Property Name="paperId" Type="int" />
+          <Property Name="priority" Type="int" />
+          <Property Name="nodeID" Type="int" />
+          <Property Name="isTitle" Type="bit" />
+        </EntityType>
+        <Association Name="FK_link_node">
+          <End Role="node" Type="Self.node" Multiplicity="0..1" />
+          <End Role="link" Type="Self.link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="node">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="link">
+              <PropertyRef Name="nodeID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_link_node1">
+          <End Role="node" Type="Self.node" Multiplicity="0..1" />
+          <End Role="link" Type="Self.link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="node">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="link">
+              <PropertyRef Name="nodeID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_link_paper">
+          <End Role="paper" Type="Self.paper" Multiplicity="0..1" />
+          <End Role="link" Type="Self.link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paper">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="link">
+              <PropertyRef Name="paperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="paperModelStoreContainer">
+          <EntitySet Name="link" EntityType="Self.link" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="node" EntityType="Self.node" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="paper" EntityType="Self.paper" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="preLink" EntityType="Self.preLink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="preNode" EntityType="Self.preNode" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_link_node" Association="Self.FK_link_node">
+            <End Role="node" EntitySet="node" />
+            <End Role="link" EntitySet="link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_link_node1" Association="Self.FK_link_node1">
+            <End Role="node" EntitySet="node" />
+            <End Role="link" EntitySet="link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_link_paper" Association="Self.FK_link_paper">
+            <End Role="paper" EntitySet="paper" />
+            <End Role="link" EntitySet="link" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="paperModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="wofraConnection" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="paper" EntityType="paperModel.paper" />
+          <EntitySet Name="link" EntityType="paperModel.link" />
+          <EntitySet Name="node" EntityType="paperModel.node" />
+          <AssociationSet Name="FK_link_node" Association="paperModel.FK_link_node">
+            <End Role="node" EntitySet="node" />
+            <End Role="link" EntitySet="link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_link_node1" Association="paperModel.FK_link_node1">
+            <End Role="node" EntitySet="node" />
+            <End Role="link" EntitySet="link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_link_paper" Association="paperModel.FK_link_paper">
+            <End Role="paper" EntitySet="paper" />
+            <End Role="link" EntitySet="link" />
+          </AssociationSet>
+          <EntitySet Name="preNode" EntityType="paperModel.preNode" />
+          <EntitySet Name="preLink" EntityType="paperModel.preLink" />
+        </EntityContainer>
+        <EntityType Name="paper">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Authors" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="SourceTitle" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Volume" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Issue" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ArtNo" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PageStart" Type="Int32" />
+          <Property Name="PageEnd" Type="Int32" />
+          <Property Name="PageCount" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="CitedBy" Type="Int32" />
+          <Property Name="Link" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Affiliations" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorsWithAffiliations" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Abstract" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorKeywords" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="IndexKeywords" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="MolecularSequenceNumbers" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ChemicalsCAS" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Tradenames" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Manufacturers" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="FundingDetails" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Refs" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CorrespondenceAddress" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Editors" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Sponsors" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Publisher" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ConferenceName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ConferenceDate" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ConferenceLocation" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ConferenceCode" Type="Int32" />
+          <Property Name="ISSN" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ISBN" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="CODEN" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="DOI" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="PubMedID" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="LanguageofOriginalDocument" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="AbbreviatedSourceTitle" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="DocumentType" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Source" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="AuthorId" Type="Int32" />
+          <Property Name="StemmedAbstract" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="AbstractWithoutQuotes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="TitleWithoutQuotes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="coPublicationsId" Type="Int32" />
+          <Property Name="eid" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="link1" Relationship="paperModel.FK_link_paper" FromRole="paper" ToRole="link" />
+          <Property Name="StemmedTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="nodeID1" />
+          <Property Type="Int32" Name="nodeID2" />
+          <Property Type="Int32" Name="weight" />
+          <Property Type="Int32" Name="distance" />
+          <Property Type="Int32" Name="frequency" />
+          <Property Type="Int32" Name="paperID" />
+          <NavigationProperty Name="node" Relationship="paperModel.FK_link_node" FromRole="link" ToRole="node" />
+          <NavigationProperty Name="node1" Relationship="paperModel.FK_link_node1" FromRole="link" ToRole="node" />
+          <NavigationProperty Name="paper" Relationship="paperModel.FK_link_paper" FromRole="link" ToRole="paper" />
+        </EntityType>
+        <EntityType Name="node">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="value" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="frequency" Nullable="true" />
+          <Property Type="Int32" Name="paperId" Nullable="true" />
+          <Property Type="Int32" Name="weight" Nullable="true" />
+          <NavigationProperty Name="link" Relationship="paperModel.FK_link_node" FromRole="node" ToRole="link" />
+          <NavigationProperty Name="link1" Relationship="paperModel.FK_link_node1" FromRole="node" ToRole="link" />
+        </EntityType>
+        <Association Name="FK_link_node">
+          <End Type="paperModel.node" Role="node" Multiplicity="0..1" />
+          <End Type="paperModel.link" Role="link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="node">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="link">
+              <PropertyRef Name="nodeID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_link_node1">
+          <End Type="paperModel.node" Role="node" Multiplicity="0..1" />
+          <End Type="paperModel.link" Role="link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="node">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="link">
+              <PropertyRef Name="nodeID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_link_paper">
+          <End Type="paperModel.paper" Role="paper" Multiplicity="0..1" />
+          <End Type="paperModel.link" Role="link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paper">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="link">
+              <PropertyRef Name="paperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="preNode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" annotation:StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Type="String" Name="value" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="paperId" />
+          <Property Name="priority" Type="Int32" />
+          <Property Name="nodeID" Type="Int32" />
+          <Property Name="isTitle" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="preLink">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="nodeID1" />
+          <Property Type="Int32" Name="nodeID2" />
+          <Property Type="Int32" Name="distance" />
+          <Property Type="Int32" Name="paperID" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="paperModelStoreContainer" CdmEntityContainer="wofraConnection">
+          <EntitySetMapping Name="paper">
+            <EntityTypeMapping TypeName="paperModel.paper">
+              <MappingFragment StoreEntitySet="paper">
+                <ScalarProperty Name="StemmedTitle" ColumnName="StemmedTitle" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Authors" ColumnName="Authors" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="SourceTitle" ColumnName="SourceTitle" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Issue" ColumnName="Issue" />
+                <ScalarProperty Name="ArtNo" ColumnName="ArtNo" />
+                <ScalarProperty Name="PageStart" ColumnName="PageStart" />
+                <ScalarProperty Name="PageEnd" ColumnName="PageEnd" />
+                <ScalarProperty Name="PageCount" ColumnName="PageCount" />
+                <ScalarProperty Name="CitedBy" ColumnName="CitedBy" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Affiliations" ColumnName="Affiliations" />
+                <ScalarProperty Name="AuthorsWithAffiliations" ColumnName="AuthorsWithAffiliations" />
+                <ScalarProperty Name="Abstract" ColumnName="Abstract" />
+                <ScalarProperty Name="AuthorKeywords" ColumnName="AuthorKeywords" />
+                <ScalarProperty Name="IndexKeywords" ColumnName="IndexKeywords" />
+                <ScalarProperty Name="MolecularSequenceNumbers" ColumnName="MolecularSequenceNumbers" />
+                <ScalarProperty Name="ChemicalsCAS" ColumnName="ChemicalsCAS" />
+                <ScalarProperty Name="Tradenames" ColumnName="Tradenames" />
+                <ScalarProperty Name="Manufacturers" ColumnName="Manufacturers" />
+                <ScalarProperty Name="FundingDetails" ColumnName="FundingDetails" />
+                <ScalarProperty Name="Refs" ColumnName="Refs" />
+                <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+                <ScalarProperty Name="Editors" ColumnName="Editors" />
+                <ScalarProperty Name="Sponsors" ColumnName="Sponsors" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="ConferenceName" ColumnName="ConferenceName" />
+                <ScalarProperty Name="ConferenceDate" ColumnName="ConferenceDate" />
+                <ScalarProperty Name="ConferenceLocation" ColumnName="ConferenceLocation" />
+                <ScalarProperty Name="ConferenceCode" ColumnName="ConferenceCode" />
+                <ScalarProperty Name="ISSN" ColumnName="ISSN" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="CODEN" ColumnName="CODEN" />
+                <ScalarProperty Name="DOI" ColumnName="DOI" />
+                <ScalarProperty Name="PubMedID" ColumnName="PubMedID" />
+                <ScalarProperty Name="LanguageofOriginalDocument" ColumnName="LanguageofOriginalDocument" />
+                <ScalarProperty Name="AbbreviatedSourceTitle" ColumnName="AbbreviatedSourceTitle" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="StemmedAbstract" ColumnName="StemmedAbstract" />
+                <ScalarProperty Name="AbstractWithoutQuotes" ColumnName="AbstractWithoutQuotes" />
+                <ScalarProperty Name="TitleWithoutQuotes" ColumnName="TitleWithoutQuotes" />
+                <ScalarProperty Name="coPublicationsId" ColumnName="coPublicationsId" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="link">
+            <EntityTypeMapping TypeName="paperModel.link">
+              <MappingFragment StoreEntitySet="link">
+                <ScalarProperty Name="paperID" ColumnName="paperID" />
+                <ScalarProperty Name="frequency" ColumnName="frequency" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="nodeID2" ColumnName="nodeID2" />
+                <ScalarProperty Name="nodeID1" ColumnName="nodeID1" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="node">
+            <EntityTypeMapping TypeName="paperModel.node">
+              <MappingFragment StoreEntitySet="node">
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="paperId" ColumnName="paperId" />
+                <ScalarProperty Name="frequency" ColumnName="frequency" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="preNode">
+            <EntityTypeMapping TypeName="paperModel.preNode">
+              <MappingFragment StoreEntitySet="preNode">
+                <ScalarProperty Name="isTitle" ColumnName="isTitle" />
+                <ScalarProperty Name="nodeID" ColumnName="nodeID" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="paperId" ColumnName="paperId" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="preLink">
+            <EntityTypeMapping TypeName="paperModel.preLink">
+              <MappingFragment StoreEntitySet="preLink">
+                <ScalarProperty Name="paperID" ColumnName="paperID" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="nodeID2" ColumnName="nodeID2" />
+                <ScalarProperty Name="nodeID1" ColumnName="nodeID1" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
